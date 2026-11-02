@@ -5,6 +5,7 @@ const path = require('node:path');
 const fs = require('node:fs');
 function createApp(filename) {
   const app = express();
+  app.set('trust proxy', 1);
   if (!filename) { fs.mkdirSync(path.join(__dirname,'data'),{recursive:true}); filename=path.join(__dirname,'data','blog.sqlite'); }
   const db = new DatabaseSync(filename);
   db.exec(`PRAGMA foreign_keys=ON;
