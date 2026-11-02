@@ -31,3 +31,27 @@ test('authentication, ownership, CRUD and restart persistence',async()=>{
  await request('/auth/signout','POST',undefined,alice);assert.equal((await request('/me','GET',undefined,alice)).data.user,null);
  } finally {await new Promise(r=>server.close(r));app.locals.db.close();fs.rmSync(folder,{recursive:true,force:true});}
 });
+
+test('signup accepts the public HTTPS origin behind a proxy', async () => {
+ const app = createApp(':memory:');
+ const server = app.listen(0, '127.0.0.1');
+ await new Promise(resolve => server.once('listening', resolve));
+ const host = '127.0.0.1:' + server.address().port;
+ const signup = origin => fetch('http://' + host + '/api/auth/signup', {
+  method: 'POST',
+  headers: {Origin: origin, 'X-Forwarded-Proto': 'https', 'Content-Type': 'application/json'},
+  body: JSON.stringify({user_id: 'proxy_test', password: 'password123', name: 'Proxy Test'})
+ });
+ try {
+  const allowed = await signup('https://' + host);
+  assert.equal(allowed.status, 201);
+  assert.match(allowed.headers.get('set-cookie'), /; Secure/);
+  await allowed.json();
+  const blocked = await signup('https://untrusted.example');
+  assert.equal(blocked.status, 403);
+  await blocked.json();
+ } finally {
+  await new Promise(resolve => server.close(resolve));
+  app.locals.db.close();
+ }
+});
