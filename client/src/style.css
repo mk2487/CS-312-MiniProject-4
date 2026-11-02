@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.form-section,
+.post {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button,
+.edit-button,
+.cancel-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    background-color: #333;
+    color: white;
+}
+
+.edit-button {
+    background-color: #555;
+    color: white;
+}
+
+.delete-button {
+    background-color: #b52b2b;
+}
+
+.cancel-button {
+    background-color: #ddd;
+    color: #333;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.buttons form {
+    margin: 0;
+}
+
+.post h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.post-info {
+    color: #777;
+    font-size: 14px;
+}
+
+.post-content {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.post h3 { overflow-wrap: anywhere; }
+
+@media (max-width: 600px) {
+
+    main {
+        width: 95%;
+    }
+
+    .form-section,
+    .post {
+        padding: 18px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .buttons a,
+    .buttons button {
+        text-align: center;
+    }
+}
+
+
+nav { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+nav button { border:1px solid #777; }
+button:disabled { opacity:.6; cursor:wait; }
+.error { color:#a11818; }
+:focus-visible { outline:3px solid #276cc5; outline-offset:3px; }

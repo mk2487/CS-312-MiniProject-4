@@ -1,0 +1,7 @@
+import React,{useState} from 'react';
+export const categories=['Tech','Lifestyle','Education','Other'];
+export default function BlogPostForm({post,onSave,onCancel}){
+ const [title,setTitle]=useState(post?.title||''),[content,setContent]=useState(post?.content||''),[category,setCategory]=useState(post?.category||'Tech'),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ async function submit(e){e.preventDefault();setBusy(true);setError('');try{await onSave({title,content,category},post?.id);if(!post){setTitle('');setContent('');}}catch(e){setError(e.message);}finally{setBusy(false);}}
+ return <section className="form-section"><h2>{post?'Edit Post':'Create a New Post'}</h2><form onSubmit={submit}><label htmlFor="title">Blog Title:</label><input id="title" value={title} onChange={e=>setTitle(e.target.value)} required maxLength={200}/><label htmlFor="category">Category:</label><select id="category" value={category} onChange={e=>setCategory(e.target.value)}>{categories.map(c=><option key={c}>{c}</option>)}</select><label htmlFor="content">Blog:</label><textarea id="content" rows="7" value={content} onChange={e=>setContent(e.target.value)} required maxLength={20000}/>{error&&<p className="error" role="alert">{error}</p>}<div className="buttons"><button disabled={busy}>{busy?'Saving…':post?'Save Changes':'Create Post'}</button>{post&&<button type="button" onClick={onCancel}>Cancel</button>}</div></form></section>;
+}
